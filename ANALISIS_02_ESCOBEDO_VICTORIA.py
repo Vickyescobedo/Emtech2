@@ -26,7 +26,7 @@ def rutas_export_import(direccion):     #Se crea la función y se mandará como 
                         contador+=1
                         rutas_ventas.append(int(ruta["total_value"]))
                         
-                ventas_totales=sum(rutas_ventas)/contador    
+                ventas_totales=sum(rutas_ventas)/contador    #se calcula el promedio de ganancias 
                 rutas_contadas.append(ruta_actual)
                 rutas_conteo.append([ruta["origin"], ruta["destination"], contador, ventas_totales])  #Se agrega la información obtenida a la tabla final
                 contador = 0
@@ -38,14 +38,14 @@ def rutas_export_import(direccion):     #Se crea la función y se mandará como 
     return rutas_conteo
    
 
-conteo_exportaciones = rutas_export_import("Exports")  #Se manda a llamar la función para exportaciones
-conteo_importaciones = rutas_export_import("Imports")  #Se manda a llamar la función para importaciones
+conteo_exportaciones = rutas_export_import("Exports")  #Se llama a la función para exportaciones
+conteo_importaciones = rutas_export_import("Imports")  #Se llama a la función para importaciones
 
-print("\n Las 10 rutas con más demanda de exportaciones son: ") #Creado para una mejor visualización de los datos
+print("\n Las 10 rutas con más demanda de exportaciones son: ") 
 for rutas_exp in conteo_exportaciones:
     print (rutas_exp)
 
-print("\n Las 10 rutas con más demanda de importaciones son: ")  #Creado para una mejor visualización de los datos
+print("\n Las 10 rutas con más demanda de importaciones son: ")  
 for rutas_imp in conteo_importaciones :
     print (rutas_imp)
     
@@ -55,10 +55,10 @@ for rutas_imp in conteo_importaciones :
 def transporte_valor_exports_import(direccion):    #Se crea la función y se mandará como parámetro Exportación o Importación
     contador = 0                                   #Se crea la variable contador para guardar el número de veces que aparece el medio de transporte
     total=0                                        #Se crea la variable total para guardar la suma del valor por cada medio de transporte
-    transporte_contadas = []
-    transportes_conteo = []                        #Se crean listas vacías para utilizar más adelante
+    transporte_contadas = []                       #Se crea la lista para guargar los diferentes medios de transporte
+    transportes_conteo = []                        #Se crea la lista para llevar a cabo el conteo
     
-    for ruta in lista_datos:                        #Se recorre la lista
+    for ruta in lista_datos:                        #Se lee la lista
         if ruta["direction"] == direccion:        
             ruta_actual = [ruta["transport_mode"]] #Se guarda la variable a comparar
             
@@ -74,19 +74,18 @@ def transporte_valor_exports_import(direccion):    #Se crea la función y se man
                 total=0
         
     transportes_conteo.sort(reverse = True, key = lambda x:x[2])  #Ordena de mayor a menor el valor total de cada medio de transporte
-    transportes_conteo= transportes_conteo #Aparecen solo los 3 medios de transporte considerando su valor
     return transportes_conteo
             
 
 
-transporte_exportaciones = transporte_valor_exports_import("Exports") #Se manda a llamar la función para exportaciones
-transporte_importaciones = transporte_valor_exports_import("Imports") #Se manda a llamar la función para importaciones
+transporte_exportaciones = transporte_valor_exports_import("Exports") #Se llama a la función para exportaciones
+transporte_importaciones = transporte_valor_exports_import("Imports") #Se llama a la función para importaciones
 
-print("\n Los 3 medios de transporte más importantes en exportaciones son: ") #Creado para una mejor visualización de los datos
+print("\n Los 3 medios de transporte más importantes en exportaciones son: ") #para una mejor visualización de los datos
 for trans_exp in transporte_exportaciones:
     print (trans_exp)
     
-print("\n Los 3 medios de transporte más importantes en importaciones son: ") #Creado para una mejor visualización de los datos
+print("\n Los 3 medios de transporte más importantes en importaciones son: ") #para una mejor visualización de los datos
 for trans_imp in transporte_importaciones:
     print (trans_imp)
     
@@ -129,7 +128,7 @@ def porcentaje_paises_exports_imports (lista_paises, porcentaje = 0.8):    #Se c
         valor += pais[1]       #Se suma su valor de operación
     for pais in lista_paises:   #Se recorre la lista
         valor_actual += pais[1] #Se suma su valor de operación
-        porcentaje_actual = round(valor_actual / valor, 2) #Se divide el valor del país de operación entre el valor total para obtener su porcentaje correspondiente       
+        porcentaje_actual = round(valor_actual / valor, 2) #Se divide el valor de operación del país (la suma de los países conforme se va haciendo la iteración) entre el valor total para obtener su porcentaje correspondiente       
         paises.append(pais)
         porcentajes_calculados.append(porcentaje_actual) #Se agrega la información obtenida a la tabla final
         if porcentaje_actual <= porcentaje: #Condición para cumplir con el porcentaje deseado
@@ -137,15 +136,13 @@ def porcentaje_paises_exports_imports (lista_paises, porcentaje = 0.8):    #Se c
         else:
             if porcentaje_actual - porcentaje <= porcentajes_calculados[-2] - porcentaje:
                 break
-            else:
-                # paises.pop(-1) #Si se rebasa el porcentaje que se desea, se borrará el último elemento sumado
-                # porcentajes_calculados.pop(-1)
+            else: #para que sólo te de los que generan el porcentaje deseado
                 break
     
     return paises
 
-paises_80_exportaciones = porcentaje_paises_exports_imports(paises_exports_imports("Exports")) #Se manda a llamar la función para exportaciones
-paises_80_importaciones = porcentaje_paises_exports_imports(paises_exports_imports("Imports")) #Se manda a llamar la función para importaciones
+paises_80_exportaciones = porcentaje_paises_exports_imports(paises_exports_imports("Exports")) #Se llama a la función para exportaciones
+paises_80_importaciones = porcentaje_paises_exports_imports(paises_exports_imports("Imports")) #Se llama a la función para importaciones
         
 print("\n Los países que generan el 80% en exportaciones son: ")  #Creado para una mejor visualización de los datos
 for pais_exp in paises_80_exportaciones:
