@@ -81,11 +81,11 @@ def transporte_valor_exports_import(direccion):    #Se crea la función y se man
 transporte_exportaciones = transporte_valor_exports_import("Exports") #Se llama a la función para exportaciones
 transporte_importaciones = transporte_valor_exports_import("Imports") #Se llama a la función para importaciones
 
-print("\n Los 3 medios de transporte más importantes en exportaciones son: ") #para una mejor visualización de los datos
+print("\n Los medios de transporte en exportaciones son: ") #para una mejor visualización de los datos
 for trans_exp in transporte_exportaciones:
     print (trans_exp)
     
-print("\n Los 3 medios de transporte más importantes en importaciones son: ") #para una mejor visualización de los datos
+print("\n Los medios de transporte en importaciones son: ") #para una mejor visualización de los datos
 for trans_imp in transporte_importaciones:
     print (trans_imp)
     
